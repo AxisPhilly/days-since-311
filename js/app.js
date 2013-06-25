@@ -1,28 +1,28 @@
 var app = app || {};
 
-// Load JSON into a readable variable.
-
 /*
-  Factory to create counters
+  Pattern to create counters
 */
-function SinceCounter() {
-  this.events = [];
-  this.findEvents = function() {
+var sinceCounter = {
+  events: [],
+  findEvents: function() {
     //parse JSON and populate the events array
     return false;
-  };
-  this.count = function() {
+  },
+  count: function() {
       var currentTime = new Date();
       return currentTime - events[0]['time'];
-  };
-}
+  }
+};
 
 /*
   Initialization function for the app.
   To create a new counter, instantiate it here.
 */
 app.init = function() {
-  var potholeCounter = new SinceCounter({terms: 'pothole'});
+  // Load JSON into a readable variable.
+  var potholeCounter = Object.create(sinceCounter);
+  potholeCounter.terms = ['pothole'];
 };
 
 app.init();
