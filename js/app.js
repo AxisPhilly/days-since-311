@@ -2,6 +2,9 @@ var app = app || {};
 
 // Load JSON into a readable variable.
 
+/*
+  Factory to create counters
+*/
 function SinceCounter() {
   this.events = [];
   this.findEvents = function() {
@@ -14,4 +17,12 @@ function SinceCounter() {
   };
 }
 
-var potholeCounter = new SinceCounter({terms: 'pothole'});
+/*
+  Initialization function for the app.
+  To create a new counter, instantiate it here.
+*/
+app.init = function() {
+  var potholeCounter = new SinceCounter({terms: 'pothole'});
+};
+
+app.init();
