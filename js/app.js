@@ -20,7 +20,17 @@ var sinceCounter = {
   To create a new counter, instantiate it here.
 */
 app.init = function() {
-  // Load JSON into a readable variable.
+  var currentData;
+
+  // I refuse to use jQuery just for AJAX!
+  var r = new XMLHttpRequest();
+  r.open("GET", '/311data.json', true);
+  r.onreadystatechange = function () {
+    if (r.readyState != 4 || r.status != 200) return;
+    console.log(JSON.parse(r.responseText));
+  };
+  r.send({});
+
   // Instantiate counters
   var potholeCounter = Object.create(sinceCounter, { terms: ['pothole'] });
 };
