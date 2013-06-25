@@ -12,6 +12,11 @@ phl311.requests({}, function(resp) {
             console.log("The file was saved!");
         }
     });
+    
+    // send that file to s3
+
+    // Write today's date to the file as last_updated property so we have something
+    // to compare to current file.
 
     // Use this snip to get dates out of date_created
     // var last_req = resp.requests[0];
