@@ -21,8 +21,8 @@ var sinceCounter = {
 */
 app.init = function() {
   // Load JSON into a readable variable.
-  var potholeCounter = Object.create(sinceCounter);
-  potholeCounter.terms = ['pothole'];
+  // Instantiate counters
+  var potholeCounter = Object.create(sinceCounter, { terms: ['pothole'] });
 };
 
 app.init();
