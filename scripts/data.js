@@ -5,6 +5,16 @@ var currentData = '../data/311data.json';
 
 phl311.requests({}, function(resp) {
     var parsed = JSON.stringify(resp);
+    parsed = JSON.parse(parsed);
+    //console.log(parsed);
+    for(var x=0; x < parsed.requests.length; x++) {
+        delete parsed.requests[x].space_id;
+        delete parsed.requests[x].score;
+        delete parsed.requests[x].count_comments;
+        delete parsed.requests[x].count_followers;
+        console.log(parsed.requests[x]);
+    }
+    parsed = JSON.stringify(parsed);
     fs.writeFile('311data.json', parsed, function(err) {
         if(err) {
             console.log(err);
@@ -12,7 +22,7 @@ phl311.requests({}, function(resp) {
             console.log("The file was saved!");
         }
     });
-    
+
     // send that file to s3
 
     // Write today's date to the file as last_updated property so we have something
