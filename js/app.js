@@ -4,19 +4,21 @@ var app = app || {};
   Pattern to create counters
 */
 var sinceCounter = {
-  events: [],
-  findEvents: function() {
-    //parse JSON and populate the events array
-    return false;
-  },
   count: function() {
       var currentTime = new Date();
-      return currentTime - events[0]['time'];
+      return currentTime - this.entries[0]['date_created'];
   }
 };
 
-app.searchData = function(data, terms){
-  return ['testing'];
+app.searchData = function(data, counter){
+  console.log(counter);
+  console.log(counter.terms);
+  counter.entries = [];
+  for (var obj in data.requests) {
+    if(data.requests[obj].title.match(counter.terms)) {
+      counter.entries.push(data.requests[obj]);
+    }
+  }
 };
 
 app.loadData = function(data, callback) {
@@ -25,16 +27,13 @@ app.loadData = function(data, callback) {
   r.open("GET", data, true);
   r.onreadystatechange = function () {
     if (r.readyState != 4 || r.status != 200) return;
-    console.log(JSON.parse(r.responseText));
     // populate the counters with their data
     var data = JSON.parse(r.responseText);
     for(var counter in app.counters) {
       if(app.counters.hasOwnProperty(counter)){
         // Search the data for entries matching the terms
-        var entries = app.searchData(data, counter.terms);
-        app.counters[counter].entries = entries;
-        console.log(app.counters[counter]);
-        console.log(entries);
+        app.searchData(data, app.counters[counter]);
+        console.log(app.counters[counter].count());
       }
     }
     callback();
@@ -44,7 +43,7 @@ app.loadData = function(data, callback) {
 
 app.render = function() {
   // Render the counters on the page, loading templates, etc.
-  console.log(app.counters.potholeCounter.entries);
+  //console.log(app.counters.catCounter.entries);
 };
 
 
@@ -55,8 +54,14 @@ app.render = function() {
 app.init = function() {
   // Instantiate counters
   app.counters = {};
-  app.counters.potholeCounter = Object.create(sinceCounter, { terms: ['pothole'] });
-  app.loadData('/311data.json', function(){ app.render(); });
+
+  app.counters.potholeCounter = Object.create(sinceCounter);
+  app.counters.potholeCounter.terms = /pothole/i;
+
+  app.counters.catCounter = Object.create(sinceCounter);
+  app.counters.catCounter.terms = /\scat/i;
+
+  app.loadData('/data/311data.json', function(){ app.render(); });
 };
 
 app.init();
