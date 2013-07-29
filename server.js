@@ -18,9 +18,9 @@ app.use(sass.middleware({
 }));
 
 app.use('/css', express.static(__dirname + '/css'));
-app.use('/js', express.static(__dirname + '/js'));
 app.use('/img', express.static(__dirname + '/img'));
 app.use('/data', express.static(__dirname + '/data'));
+app.use('/scripts', express.static(__dirname + '/scripts'));
 
 var title = 'App Title | AxisPhilly';
 
