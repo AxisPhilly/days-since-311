@@ -1,3 +1,14 @@
+require.config({
+  shim: {
+    underscore: {
+      exports: '_'
+    }
+  }
+});
+requirejs(['underscore'], function(_) {
+  //_.each([1, 2, 3], alert);
+});
+
 var app = app || {};
 
 /*
