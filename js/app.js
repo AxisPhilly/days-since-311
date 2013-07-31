@@ -1,8 +1,7 @@
 define([
   'underscore',
-  'models/counter',
   'router'
-], function(_, Counter, Router){
+], function(_, Router){
   var initialize = function(){
     Router.initialize();
   };
