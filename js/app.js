@@ -1,8 +1,12 @@
 define([
   'underscore',
+  'models/counter',
   'router'
-], function(_, Router){
+], function(_, Counter, Router){
   var initialize = function(){
+    var potholes = new Counter( { terms: /pothole/i });
+    var cats = new Counter( { terms: /\scat/i });
+    console.log(cats.count);
     Router.initialize();
   };
   return {
@@ -57,12 +61,6 @@ app.loadData = function(data, callback) {
   r.send({});
 };
 
-app.render = function() {
-  // Render the counters on the page, loading templates, etc.
-  //console.log(app.counters.catCounter.entries);
-};
-
-
 /*
   Initialization function for the app.
   To create a new counter, instantiate it here.
@@ -77,7 +75,8 @@ app.init = function() {
   app.counters.catCounter = Object.create(sinceCounter);
   app.counters.catCounter.terms = /\scat/i;
 
-  app.loadData('/data/311data.json', function(){ app.render(); });
+  app.loadData('/data/311data.json', function(){ console.log(app.counters); });
+
 };
 
 app.init();

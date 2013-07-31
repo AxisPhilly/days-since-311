@@ -6,12 +6,13 @@ define([
   'text!templates/counters/list.html'
 ], function($, _, Backbone, CounterCollection, counterListTemplate) {
   var CounterListView = Backbone.View.extend({
-    el: $('#app-container'),
-    initialize: function() {
+    el: $('#container'),
+    render: function() {
       this.collection = new CounterCollection();
-      this.collection.add({ terms: 'cat' });
+      //this.collection.fetch();
       var compiledTemplate = _.template(counterListTemplate, { counters: this.collection.models });
       this.$el.append( compiledTemplate );
+      console.log('Collection rendered');
     }
   });
   return CounterListView;

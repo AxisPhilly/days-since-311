@@ -12,10 +12,63 @@ phl311.requests({}, function(resp) {
         delete parsed.requests[x].score;
         delete parsed.requests[x].count_comments;
         delete parsed.requests[x].count_followers;
-        console.log(parsed.requests[x]);
+        //console.log(parsed.requests[x]);
     }
     parsed = JSON.stringify(parsed);
     fs.writeFile('311data.json', parsed, function(err) {
+        if(err) {
+            console.log(err);
+        } else {
+            console.log("The file was saved!");
+        }
+    });
+
+    var sinceCounter = {
+      count: function() {
+          var currentTime = new Date();
+          var entryDate = new Date(parseInt(this.entries[0]['date_created'], 10)*1000);
+          var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+          // console.log(entryDate);
+          // console.log(parseInt(this.entries[0]['date_created']));
+          return Math.round(Math.abs((currentTime.getTime() - entryDate.getTime())/(oneDay)));
+      }
+    };
+
+    var searchData = function(data, counter){
+      //console.log(counter);
+      //console.log(counter.terms);
+      counter.entries = [];
+      var data = JSON.parse(data);
+      for (var obj in data.requests) {
+        if(data.requests[obj].title.match(counter.terms)) {
+          counter.entries.push(data.requests[obj]);
+        }
+      }
+    };
+
+    var loadData = function(data) {
+      // I refuse to use jQuery just for AJAX!
+        for(var counter in counters) {
+          if(counters.hasOwnProperty(counter)){
+            // Search the data for entries matching the terms
+            searchData(data, counters[counter]);
+            //console.log(counters[counter]);
+          }
+        }
+    };
+
+    var counters = {};
+
+    // counters.potholeCounter = Object.create(sinceCounter);
+    // counters.potholeCounter.terms = /pothole/i;
+
+    counters.catCounter = Object.create(sinceCounter);
+    counters.catCounter.terms = /\scat/i;
+    counters.catCounter.title = "Cat incidents";
+
+    loadData(parsed);
+
+    fs.writeFile('parsedData.json', JSON.stringify(counters), function(err) {
         if(err) {
             console.log(err);
         } else {
