@@ -1,7 +1,6 @@
 define([
-  'underscore',
   'router'
-], function(_, Router){
+], function(Router){
   var initialize = function(){
     Router.initialize();
   };
