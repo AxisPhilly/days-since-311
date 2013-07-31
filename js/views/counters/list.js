@@ -8,11 +8,12 @@ define([
   var CounterListView = Backbone.View.extend({
     el: $('#container'),
     render: function() {
-      this.collection = new CounterCollection();
-      this.collection.fetch();
-      var compiledTemplate = _.template(counterListTemplate, { counters: this.collection.models });
-      console.log(this.collection);
-      this.$el.append( compiledTemplate );
+      _.each(this.collection, function(counter) {
+        // iterate through the collection
+        // render single views
+        var compiledTemplate = _.template(counterListTemplate, counter.toJSON());
+        this.$el.append( compiledTemplate );
+      }, this);
       console.log('Collection rendered');
     }
   });
