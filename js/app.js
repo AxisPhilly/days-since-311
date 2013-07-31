@@ -1,12 +1,13 @@
-require.config({
-  shim: {
-    underscore: {
-      exports: '_'
-    }
-  }
-});
-requirejs(['underscore'], function(_) {
-  //_.each([1, 2, 3], alert);
+define([
+  'underscore',
+  'router'
+], function(_, Router){
+  var initialize = function(){
+    Router.initialize();
+  };
+  return {
+    initialize: initialize
+  };
 });
 
 var app = app || {};
