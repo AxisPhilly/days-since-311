@@ -9,8 +9,9 @@ define([
     el: $('#container'),
     render: function() {
       this.collection = new CounterCollection();
-      //this.collection.fetch();
+      this.collection.fetch();
       var compiledTemplate = _.template(counterListTemplate, { counters: this.collection.models });
+      console.log(this.collection);
       this.$el.append( compiledTemplate );
       console.log('Collection rendered');
     }

@@ -4,7 +4,8 @@ define([
  'models/counter'
 ], function(_, Backbone, CounterModel) {
   var CounterCollection = Backbone.Collection.extend({
-    model: CounterModel
+    model: CounterModel,
+    url: '/parsedData.json'
   });
   return CounterCollection;
 });
