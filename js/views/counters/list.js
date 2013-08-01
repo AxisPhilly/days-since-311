@@ -8,7 +8,7 @@ define([
   var CounterListView = Backbone.View.extend({
     render: function() {
       this.collection.each(function(counter) {
-        this.$el.append(new CounterView({ model: counter }).render());
+        this.$el.append(new CounterView({ model: counter, el: '#container' }).render());
       }, this);
       console.log('Collection rendered!');
     }

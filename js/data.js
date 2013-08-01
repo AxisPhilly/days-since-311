@@ -57,14 +57,15 @@ phl311.requests({}, function(resp) {
         }
     };
 
-    var counters = {};
+    var counters = [];
 
-    // counters.potholeCounter = Object.create(sinceCounter);
-    // counters.potholeCounter.terms = /pothole/i;
+    counters[0] = Object.create(sinceCounter);
+    counters[0].terms = /\scat/i;
+    counters[0].title = "Cat incidents";
 
-    counters.catCounter = Object.create(sinceCounter);
-    counters.catCounter.terms = /\scat/i;
-    counters.catCounter.title = "Cat incidents";
+    counters[1] = Object.create(sinceCounter);
+    counters[1].terms = /pothole/i;
+    counters[1].title = "Potholes";
 
     loadData(parsed);
 

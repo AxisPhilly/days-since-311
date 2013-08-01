@@ -8,7 +8,8 @@ define([
   var CounterView = Backbone.View.extend({
     tagName:'div',
     render: function() {
-      this.$el.append(_.template(counterTemplate, this.model));
+      this.$el.append(_.template(counterTemplate, this.model.toJSON()));
+      console.log(this.model.attributes);
       console.log('Counter rendered');
       return this;
     }
