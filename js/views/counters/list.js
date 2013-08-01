@@ -3,18 +3,14 @@ define([
   'underscore',
   'backbone',
   'collections/counters',
-  'text!templates/counters/list.html'
-], function($, _, Backbone, CounterCollection, counterListTemplate) {
+  'views/counters/show'
+], function($, _, Backbone, CounterCollection, CounterView) {
   var CounterListView = Backbone.View.extend({
-    el: $('#container'),
     render: function() {
-      _.each(this.collection, function(counter) {
-        // iterate through the collection
-        // render single views
-        var compiledTemplate = _.template(counterListTemplate, counter.toJSON());
-        this.$el.append( compiledTemplate );
+      this.collection.each(function(counter) {
+        this.$el.append(new CounterView({ model: counter }).render());
       }, this);
-      console.log('Collection rendered');
+      console.log('Collection rendered!');
     }
   });
   return CounterListView;
