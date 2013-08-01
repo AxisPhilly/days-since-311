@@ -9,7 +9,7 @@ define([
 ], function($, _, Backbone, CounterCollection, CounterListView, CounterView, objects) {
   var AppRouter = Backbone.Router.extend({
     initialize: function(){
-      this.counters = new CounterCollection(object);
+      this.counters = new CounterCollection(objects);
     },
     routes: {
       "": 'index',
