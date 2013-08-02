@@ -23,31 +23,29 @@ phl311.requests({}, function(resp) {
         }
     });
 
-    var sinceCounter = {
-      count: function() {
-          var currentTime = new Date();
-          var entryDate = new Date(parseInt(this.entries[0]['date_created'], 10)*1000);
-          var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
-          // console.log(entryDate);
-          // console.log(parseInt(this.entries[0]['date_created']));
-          return Math.round(Math.abs((currentTime.getTime() - entryDate.getTime())/(oneDay)));
-      }
+    var findDays = function(counter) {
+      var currentTime = new Date();
+      var entryDate = new Date(parseInt(counter.entries[0]['date_created'], 10)*1000);
+      var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+      return Math.round(Math.abs((currentTime.getTime() - entryDate.getTime())/(oneDay)));
     };
 
     var searchData = function(data, counter){
       //console.log(counter);
       //console.log(counter.terms);
       counter.entries = [];
-      var data = JSON.parse(data);
+      data = JSON.parse(data);
       for (var obj in data.requests) {
         if(data.requests[obj].title.match(counter.terms)) {
+          var entry = data.requests[obj];
           counter.entries.push(data.requests[obj]);
         }
       }
+      // Calculate the days since and add to the object
+      counter.since = findDays(counter);
     };
 
     var loadData = function(data) {
-      // I refuse to use jQuery just for AJAX!
         for(var counter in counters) {
           if(counters.hasOwnProperty(counter)){
             // Search the data for entries matching the terms
@@ -59,13 +57,15 @@ phl311.requests({}, function(resp) {
 
     var counters = [];
 
-    counters[0] = Object.create(sinceCounter);
-    counters[0].terms = /\scat/i;
-    counters[0].title = "Cat incidents";
+    counters[0] = {
+      terms: /\scat/i,
+      title: "Cat incidents"
+    };
 
-    counters[1] = Object.create(sinceCounter);
-    counters[1].terms = /pothole/i;
-    counters[1].title = "Potholes";
+    counters[1] = {
+      terms: /pothole/i,
+      title: "Potholes"
+    };
 
     loadData(parsed);
 
