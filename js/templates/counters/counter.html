@@ -1,4 +1,14 @@
 <h2><%= title %></h2>
 <ul>
-<% _.each(entries, function(entry) { %> <li><%= entry.title %></li> <% }); %>
+<% _.each(entries, function(entry) { %>
+<li>
+  <ul class="<%= entry.status.replace(/\s+/g, '')%>">
+    <li><%= entry.title %></li>
+    <% if (entry.description != null){ %>
+    <li><%= entry.description %></li>
+    <% } %>
+    <li><%= entry.status %></li>
+  </ul>
+</li>
+<% }); %>
 </ul>

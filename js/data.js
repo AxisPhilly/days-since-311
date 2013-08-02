@@ -38,6 +38,7 @@ phl311.requests({}, function(resp) {
       for (var obj in data.requests) {
         if(data.requests[obj].title.match(counter.terms)) {
           var entry = data.requests[obj];
+          //entry.human_date = date_created
           counter.entries.push(data.requests[obj]);
         }
       }
